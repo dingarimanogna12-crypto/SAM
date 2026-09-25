@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-gaegu {
+    font-family: 'Gaegu', cursive, sans-serif;
+  }
+  .font-mono {
+    font-family: 'Space Mono', monospace;
+  }
+  .font-sans {
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+:root {
+  --bg: #fffef2;
+  --ink: #2b2b2b;
+  --accent: #ff5f3d;
+  --card-bg: #ffffff;
+}
+
+body {
+  background-color: #fffef2;
+  color: #2b2b2b;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom Neo-Brutalist Card Shadows */
+.brutalist-card {
+  background-color: #ffffff;
+  border: 3px solid #2b2b2b;
+  box-shadow: 8px 8px 0px #2b2b2b;
+}
+
+.brutalist-card-lg {
+  background-color: #ffffff;
+  border: 3px solid #2b2b2b;
+  box-shadow: 12px 12px 0px #2b2b2b;
+}
+
+.brutalist-btn {
+  background-color: #ff5f3d;
+  color: #ffffff;
+  border: 3px solid #2b2b2b;
+  box-shadow: 4px 4px 0px #2b2b2b;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.brutalist-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #2b2b2b;
+}
+
+.brutalist-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #2b2b2b;
+}
+
+.brutalist-badge {
+  font-family: 'Space Mono', monospace;
+  background-color: #2b2b2b;
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 9999px;
+}

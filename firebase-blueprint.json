@@ -1,0 +1,240 @@
+{
+  "entities": {
+    "DoctorEntity": {
+      "title": "DoctorEntity",
+      "description": "Licensed healthcare practitioner or veterinary medical officer entity",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Unique Firebase Authentication UID"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Practitioner medical or institutional email"
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Full name with clinical credentials"
+        },
+        "entityType": {
+          "type": "string",
+          "enum": ["doctor"],
+          "description": "Entity classification tag"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "Clinical Pharmacist",
+            "Infectious Disease Specialist",
+            "Veterinarian",
+            "Hospital Epidemiologist",
+            "Public Health Officer",
+            "Physician / Medical Officer",
+            "Regulator"
+          ],
+          "description": "Clinical or surveillance specialty"
+        },
+        "organization": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Hospital, clinic, or regulatory network"
+        },
+        "licenseNumber": {
+          "type": "string",
+          "maxLength": 60,
+          "description": "Professional medical, veterinary, or pharmacy license"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO creation timestamp"
+        }
+      },
+      "required": ["uid", "email", "displayName", "entityType", "role", "organization"]
+    },
+    "PatientEntity": {
+      "title": "PatientEntity",
+      "description": "Patient, guardian, or individual healthcare consumer entity",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Unique Firebase Authentication UID"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Patient contact email address"
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Full patient name"
+        },
+        "entityType": {
+          "type": "string",
+          "enum": ["patient"],
+          "description": "Entity classification tag"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["Patient / Individual", "Pet Owner"],
+          "description": "Patient or pet owner persona"
+        },
+        "organization": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Primary healthcare clinic or city"
+        },
+        "ageYears": {
+          "type": "number",
+          "description": "Patient age in years"
+        },
+        "gender": {
+          "type": "string",
+          "enum": ["Male", "Female", "Other", "Unknown"],
+          "description": "Patient gender"
+        },
+        "allergies": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Known antimicrobial or drug allergies"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO creation timestamp"
+        }
+      },
+      "required": ["uid", "email", "displayName", "entityType", "role"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Unified profile entity for backward compatibility",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Unique Firebase Authentication User ID"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Full name"
+        },
+        "accountType": {
+          "type": "string",
+          "enum": ["doctor", "patient"],
+          "description": "Account portal persona"
+        },
+        "entityType": {
+          "type": "string",
+          "enum": ["doctor", "patient"],
+          "description": "Entity classification"
+        },
+        "role": {
+          "type": "string",
+          "description": "Role string"
+        },
+        "organization": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Organization"
+        },
+        "licenseNumber": {
+          "type": "string",
+          "maxLength": 60,
+          "description": "License"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp"
+        }
+      },
+      "required": ["uid", "displayName"]
+    },
+    "PrescriptionRecord": {
+      "title": "PrescriptionRecord",
+      "description": "A saved prescription and surveillance audit result record",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "Prescription identifier"
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "ID of the clinician or patient"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Time of analysis"
+        },
+        "diagnosis": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Patient clinical diagnosis"
+        },
+        "species": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Patient species"
+        },
+        "patientType": {
+          "type": "string",
+          "enum": ["human", "veterinary"],
+          "description": "Human or veterinary medicine"
+        },
+        "overallStatus": {
+          "type": "string",
+          "enum": ["CRITICAL", "WARNING", "INFO", "COMPLIANT"],
+          "description": "Surveillance risk status"
+        },
+        "rawText": {
+          "type": "string",
+          "maxLength": 5000,
+          "description": "Prescription transcription or note"
+        },
+        "analysisData": {
+          "type": "string",
+          "description": "JSON serialized full analysis result payload"
+        }
+      },
+      "required": ["id", "userId", "timestamp", "diagnosis", "overallStatus"]
+    }
+  },
+  "firestore": {
+    "/doctors/{doctorId}": {
+      "schema": "DoctorEntity",
+      "description": "Doctor and clinician entity records"
+    },
+    "/doctors/{doctorId}/prescriptions/{prescriptionId}": {
+      "schema": "PrescriptionRecord",
+      "description": "Prescription audits conducted by the doctor"
+    },
+    "/patients/{patientId}": {
+      "schema": "PatientEntity",
+      "description": "Patient and healthcare consumer entity records"
+    },
+    "/patients/{patientId}/prescriptions/{prescriptionId}": {
+      "schema": "PrescriptionRecord",
+      "description": "Prescriptions and medication checks for the patient"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Unified user profile index"
+    },
+    "/users/{userId}/prescriptions/{prescriptionId}": {
+      "schema": "PrescriptionRecord",
+      "description": "Prescriptions scoped to the user"
+    }
+  }
+}

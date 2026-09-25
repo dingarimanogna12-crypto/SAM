@@ -1,0 +1,10 @@
+{
+  "name": "Remix AMU Guardian AI",
+  "description": "AI-powered assistant for monitoring antimicrobial usage and drug safety through zero-error prescription analysis, dosage verification, and regulatory alerts.",
+    "requestFramePermissions": [
+      "microphone"
+    ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
